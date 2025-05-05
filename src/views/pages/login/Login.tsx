@@ -11,9 +11,6 @@ import {
   CFormInput,
   CInputGroup,
   CInputGroupText,
-  CModal,
-  CModalBody,
-  CModalHeader,
   CRow,
 } from '@coreui/react'
 import React from 'react'
@@ -59,6 +56,7 @@ const Login = () => {
                         invalid={isInValid.password}
                       />
                     </CInputGroup>
+                    {isError && <p className="text-danger">{errorMsg}</p>}
                     <CRow>
                       <CCol xs={6}>
                         <CButton
@@ -99,12 +97,6 @@ const Login = () => {
           </CCol>
         </CRow>
       </CContainer>
-      {isError && (
-        <CModal visible alignment="center">
-          <CModalHeader>Error</CModalHeader>
-          <CModalBody>{errorMsg}</CModalBody>
-        </CModal>
-      )}
     </div>
   )
 }

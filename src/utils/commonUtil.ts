@@ -1,8 +1,9 @@
 export const commonUtil = {
   getMiliseconds(time: string) {
-    const date = new Date(time)
+    const isoDataString = time.replace(" ", "T") + "Z"
+    const date = new Date(isoDataString)
 
-    return date.getUTCMilliseconds()
+    return date.getTime()
   },
   getCurrentTimeString() {
     const date = new Date()
@@ -18,7 +19,7 @@ export const commonUtil = {
 
     return { startTs: this.convertToDateString(date1), endTs: this.convertToDateString(date2) }
   },
-  convertToDateString(date: Date) {
+  convertToDateString(date: Date, timeOnly = false) {
     const pad = (num: number) => String(num).padStart(2, '0')
 
     const year = date.getFullYear()
@@ -27,6 +28,10 @@ export const commonUtil = {
     const hours = pad(date.getHours())
     const minutes = pad(date.getMinutes())
     const seconds = pad(date.getSeconds())
+
+    if (timeOnly) {
+      return `${hours}:${minutes}:${seconds}`
+    }
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
   },

@@ -8,7 +8,6 @@ const useDebounce = () => {
       clearTimeout(id.current)
 
       id.current = setTimeout(() => {
-        console.log('[test]')
         res(callback())
 
         clearTimeout(id.current)

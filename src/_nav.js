@@ -13,8 +13,10 @@ import {
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilLightbulb
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import { routeName } from './routes';
 
 const _nav = [
   {
@@ -26,6 +28,12 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'Dashboard-Light',
+    to: routeName.dashboardLight,
+    icon: <CIcon icon={cilLightbulb} customClassName="nav-icon" />,
   },
   {
     component: CNavTitle,

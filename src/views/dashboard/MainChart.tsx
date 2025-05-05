@@ -1,12 +1,12 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react'
 
-import { CCard } from '@coreui/react';
-import { CChartLine } from '@coreui/react-chartjs';
-import { ChartData, ChartOptions } from 'chart.js';
-import { DeviceStatusModel } from 'src/models/DeviceModel';
-import { commonUtil } from 'src/utils/commonUtil';
-import ConditionalComp from './ConditionalComp';
-import { colorSample } from 'src/constants/sampleData';
+import { CCard } from '@coreui/react'
+import { CChartLine } from '@coreui/react-chartjs'
+import { ChartData, ChartOptions } from 'chart.js'
+import { DeviceStatusModel } from 'src/models/DeviceModel'
+import { commonUtil } from 'src/utils/commonUtil'
+import ConditionalComp from './ConditionalComp'
+import { colorSample } from 'src/constants/sampleData'
 
 interface Props {
   chartData?: DeviceStatusModel
@@ -26,7 +26,9 @@ const MainChart = ({ chartData }: Props) => {
     for (const [key, value] of Object.entries(chartData)) {
       if (value.length !== labels.length) {
         value.forEach((v) => {
-          labels = [...labels, commonUtil.convertToDateString(new Date(v.ts))]
+          const timeOnly = commonUtil.convertToDateString(new Date(v.ts), true)
+
+          labels = [...labels, timeOnly]
         })
       }
 
@@ -51,6 +53,7 @@ const MainChart = ({ chartData }: Props) => {
   // Options for the chart
   const options: ChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       colors: {
         enabled: true,
@@ -71,7 +74,7 @@ const MainChart = ({ chartData }: Props) => {
         <CCard>No data availble</CCard>
       </ConditionalComp>
       <ConditionalComp when={data !== null}>
-        <CChartLine ref={chartRef} height={50} data={data!} options={options} />
+        <CChartLine ref={chartRef} height={200} data={data!} options={options} />
       </ConditionalComp>
     </>
   )

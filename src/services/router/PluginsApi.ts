@@ -1,6 +1,6 @@
-import { DeviceInfoModel, DeviceStatusModel } from 'src/models/DeviceModel'
-import { commonUtil } from 'src/utils/commonUtil'
-import Api from '../api'
+import { DeviceInfoModel, DeviceStatusModel } from 'src/models/DeviceModel';
+import { commonUtil } from 'src/utils/commonUtil';
+import Api from '../api';
 
 class PuglinsApi extends Api {
   private deviceId = import.meta.env.VITE_DEVICEID
@@ -26,12 +26,23 @@ class PuglinsApi extends Api {
     return res.data
   }
 
-  async updateDeviceValue(value: number) {
-    let url = `/api/plugins/telemetry/DEVICE/${this.deviceId}/SERVER_SCOPE`
+  /**
+   * ### API 스펙 상이
+   * - 쿼리 파라미터로 상태 키 = 값을 전달하여 상태 값을 제어
+   * - 전구 제어 시 brightness=value로 제어 요청
+   */
+  async updateDeviceValue(brightness: number) {
+    // 스펙과 동일한 요청 500에러 발생
+    // let url = `/api/plugins/telemetry/DEVICE/${this.deviceId}/SERVER_SCOPE`
 
-    url += `brightness=${value}`
+    // url += `?brightness=${value}`
 
-    const res = await super.post(url, null)
+    // const res = await super.post(url, null)
+
+    // post body에 데이터 세팅 후 요청시 200(서버 확인 필요)
+    const res = await super.post(`/api/plugins/telemetry/DEVICE/${this.deviceId}/SERVER_SCOPE`, {
+      brightness,
+    })
 
     console.log({ res })
 

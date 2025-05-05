@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { statusKeySample, statusValueSample } from 'src/constants/sampleData'
 import { useInterval } from 'src/hooks/useInterval'
-import { DeviceInfoModel } from 'src/models/DeviceModel'
+import { DeviceInfoModel, DeviceStatusModel } from 'src/models/DeviceModel'
 import { apiManager } from 'src/services/apiManager'
 import { commonUtil } from 'src/utils/commonUtil'
 
@@ -20,12 +20,15 @@ const useDashboardController = () => {
     enabled: deviceInfo !== undefined,
   })
 
+  const [mock, setMock] = useState<DeviceStatusModel>()
+
   const { startInterval, stopInterval } = useInterval(() => {
     const time = commonUtil.getCurrentTimeString()
 
     console.log(`[set] new time interval : ${time}`)
 
     onChangeTime(time)
+    setMock(statusValueSample)
   }, 5000)
 
   useEffect(() => {
@@ -33,8 +36,7 @@ const useDashboardController = () => {
       const { startTs, endTs } = commonUtil.getInitalTime()
 
       setDeviceInfo({
-        keys: statusKeySample,
-        // list.filter(e => statusKeySample.includes(e)),
+        keys: list.filter((e) => statusKeySample.includes(e)),
         startTs,
         endTs,
       })
@@ -55,7 +57,7 @@ const useDashboardController = () => {
     })
   }
 
-  return { statusData: statusValueSample(), time: deviceInfo?.endTs, onChangeTime }
+  return { statusData, mock, time: deviceInfo?.endTs, onChangeTime }
 }
 
 export default useDashboardController

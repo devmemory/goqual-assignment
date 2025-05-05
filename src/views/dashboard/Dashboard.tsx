@@ -9,7 +9,8 @@ import useDashboardController from './useDashboardController'
 import { colorSample } from 'src/constants/sampleData'
 
 const Dashboard = () => {
-  const { statusData, time, onChangeTime } = useDashboardController()
+  //todo:statusData mock데이터 교체
+  const { mock: statusData, time, onChangeTime } = useDashboardController()
 
   const progressExample = useMemo(() => {
     return statusData
