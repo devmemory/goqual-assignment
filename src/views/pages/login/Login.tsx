@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom'
 import useLoginController from './useLoginController'
 
 const Login = () => {
-  const { isInValid, isError, onChangeValue, onSubmit, isPending } = useLoginController()
+  const { isInValid, isError, errorMsg, onChangeValue, onSubmit, isPending } = useLoginController()
 
   return (
     <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
@@ -102,7 +102,7 @@ const Login = () => {
       {isError && (
         <CModal visible alignment="center">
           <CModalHeader>Error</CModalHeader>
-          <CModalBody>Login Failed</CModalBody>
+          <CModalBody>{errorMsg}</CModalBody>
         </CModal>
       )}
     </div>

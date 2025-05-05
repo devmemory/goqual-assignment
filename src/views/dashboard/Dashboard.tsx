@@ -1,22 +1,27 @@
 import classNames from 'classnames'
-import React from 'react'
+import React, { useMemo } from 'react'
 
 import { CCard, CCardBody, CCardFooter, CCol, CProgress, CRow } from '@coreui/react'
 
 import CDatePicker from '../forms/date-picker/CDatePicker'
 import MainChart from './MainChart'
 import useDashboardController from './useDashboardController'
+import { colorSample } from 'src/constants/sampleData'
 
 const Dashboard = () => {
   const { statusData, time, onChangeTime } = useDashboardController()
 
-  const progressExample = [
-    { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
-    { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
-    { title: 'Pageviews', value: '78.706 Views', percent: 60, color: 'warning' },
-    { title: 'New Users', value: '22.123 Users', percent: 80, color: 'danger' },
-    { title: 'Bounce Rate', value: 'Average Rate', percent: 40.15, color: 'primary' },
-  ]
+  const progressExample = useMemo(() => {
+    return statusData
+      ? Object.entries(statusData).map(([title, values]) => {
+          const value = values[values.length - 1].value
+
+          return { title, value, color: colorSample[title].ui }
+        })
+      : []
+  }, [statusData])
+
+  console.log({ statusData, progressExample })
 
   return (
     <CCard className="mb-4">
@@ -33,7 +38,7 @@ const Dashboard = () => {
             </div>
           </CCol>
         </CRow>
-        <MainChart />
+        <MainChart chartData={statusData} />
       </CCardBody>
       <CCardFooter>
         <CRow
@@ -51,10 +56,8 @@ const Dashboard = () => {
               key={index}
             >
               <div className="text-body-secondary">{item.title}</div>
-              <div className="fw-semibold text-truncate">
-                {item.value} ({item.percent}%)
-              </div>
-              <CProgress thin className="mt-2" color={item.color} value={item.percent} />
+              <div className="fw-semibold text-truncate">{item.value}%</div>
+              <CProgress thin className="mt-2" color={item.color} value={item.value} />
             </CCol>
           ))}
         </CRow>

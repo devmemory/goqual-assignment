@@ -2,7 +2,12 @@ export const commonUtil = {
   getMiliseconds(time: string) {
     const date = new Date(time)
 
-    return date.getTime()
+    return date.getUTCMilliseconds()
+  },
+  getCurrentTimeString() {
+    const date = new Date()
+
+    return this.convertToDateString(date)
   },
   getInitalTime(newDate?: string) {
     const date1 = newDate ? new Date(newDate) : new Date()

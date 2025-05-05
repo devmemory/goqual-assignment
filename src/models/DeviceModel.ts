@@ -6,7 +6,7 @@ export interface DeviceInfoModel {
 
 export interface DeviceStatusModel {
   [key: string]: {
-    value: string
+    value: number
     ts: number
-  }
+  }[]
 }

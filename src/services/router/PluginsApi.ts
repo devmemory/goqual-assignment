@@ -18,7 +18,7 @@ class PuglinsApi extends Api {
     const startTs = commonUtil.getMiliseconds(model.startTs)
     const endTs = commonUtil.getMiliseconds(model.endTs)
 
-    const res = await super.get<DeviceStatusModel[]>(
+    const res = await super.get<DeviceStatusModel>(
       `/api/plugins/telemetry/DEVICE/${this.deviceId}/values/timeseries`,
       { keys, startTs, endTs },
     )

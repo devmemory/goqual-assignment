@@ -4,15 +4,15 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { commonUtil } from 'src/utils/commonUtil'
 
 interface Props {
-  value: string
+  value?: string
   onChange: (value: string) => void
 }
 
 /**
- * @param onChange fired only when enter is pressed or leave
+ * @param onChange fires only when enter is pressed or leave
  */
 const CDatePicker = ({ value, onChange }: Props) => {
-  const [dateString, setDateString] = useState<string>(value)
+  const [dateString, setDateString] = useState<string | undefined>(value)
 
   const onChangeDate = (date: Date | null) => {
     if (date !== null) {
@@ -21,16 +21,16 @@ const CDatePicker = ({ value, onChange }: Props) => {
   }
 
   const onKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && dateString) {
       onChange(dateString)
     }
   }
 
   return (
     <DatePicker
-      className='text-center'
+      className="text-center"
       onKeyDown={onKeyDown}
-      selected={new Date(dateString)}
+      selected={dateString === undefined ? new Date() : new Date(dateString)}
       onChange={onChangeDate}
       showTimeSelect
       timeFormat="HH:mm:ss"

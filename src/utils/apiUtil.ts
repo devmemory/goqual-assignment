@@ -1,3 +1,4 @@
+import axios from 'axios'
 import Cookies from 'js-cookie'
 
 const TOKEN = {
@@ -25,5 +26,14 @@ export const apiUtil = {
   deleteToken() {
     Cookies.remove(TOKEN.accessToken)
     Cookies.remove(TOKEN.refreshToken)
+  },
+  getErrorMsg(error: unknown) {
+    if (axios.isAxiosError(error)) {
+      const message = error.response?.data?.message || error.message
+
+      return message
+    }
+
+    return `${error}`
   },
 }

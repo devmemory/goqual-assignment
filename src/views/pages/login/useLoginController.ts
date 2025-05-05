@@ -1,9 +1,10 @@
 import { useMutation } from '@tanstack/react-query'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AuthModel } from 'src/models/AuthModel'
 import { routeName } from 'src/routes'
 import { apiManager } from 'src/services/apiManager'
+import { apiUtil } from 'src/utils/apiUtil'
 import { commonUtil } from 'src/utils/commonUtil'
 
 const useLoginController = () => {
@@ -18,15 +19,16 @@ const useLoginController = () => {
 
   const navigate = useNavigate()
 
-  const { mutate, isPending, isError } = useMutation({
+  const { mutate, isPending, isError, error } = useMutation({
     mutationFn: apiManager.login,
     onSuccess() {
       navigate(routeName.dashboard)
     },
-    onError(error) {
-      console.log({ error })
-    },
   })
+
+  const errorMsg = useMemo(() => {
+    return apiUtil.getErrorMsg(error)
+  }, [error])
 
   const onChangeValue = (value: string, key: keyof AuthModel) => {
     setModel((state) => {
@@ -61,7 +63,7 @@ const useLoginController = () => {
     return Object.values(invalid).every((invalid) => !invalid)
   }
 
-  return { isInValid, isError, onChangeValue, onSubmit, isPending }
+  return { isInValid, isError, onChangeValue, onSubmit, isPending,errorMsg }
 }
 
 export default useLoginController

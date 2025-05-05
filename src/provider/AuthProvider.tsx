@@ -11,11 +11,11 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     console.log({ token })
 
-    // if (token === undefined) {
-    //   navigate(routeName.login)
-    // } else {
-    //   navigate(routeName.dashboard)
-    // }
+    if (token === undefined) {
+      navigate(routeName.login)
+    } else {
+      navigate(routeName.dashboard)
+    }
   }, [])
 
   return <>{children}</>

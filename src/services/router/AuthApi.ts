@@ -17,8 +17,6 @@ class AuthApi extends Api {
 
       return
     }
-
-    throw new Error(`login fail`)
   }
 }
 
