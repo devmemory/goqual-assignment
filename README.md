@@ -5,6 +5,7 @@
 - 라이브러리 설치 yarn or npm i
 - yarn dev or npm run build
 #### 실행방법2
+- nginx /api 부분 url 입력 예시: http://localhost:8080;
 - 이미지 빌드: docker build -t <image-name> .
 - 이미지 실행: docker run -d(opt) -p <target-port>:<container-port> <image-name>
 
