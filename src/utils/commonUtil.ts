@@ -17,7 +17,7 @@ export const commonUtil = {
 
     const date2 = new Date(current - 10 * 60 * 1000)
 
-    return { startTs: this.convertToDateString(date1), endTs: this.convertToDateString(date2) }
+    return { startTs: this.convertToDateString(date2), endTs: this.convertToDateString(date1) }
   },
   convertToDateString(date: Date, timeOnly = false) {
     const pad = (num: number) => String(num).padStart(2, '0')
